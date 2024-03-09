@@ -10,7 +10,8 @@ namespace NeoCortexApiSample
     public class MyTraceListener : TraceListener
     {
 
-        public bool ShouldWriteToFile { get; set; } = true;
+        public bool ShouldWriteToFile { get; set; } = false;
+        public string TraceOutputFileName { get; set; } = DateTime.Now.Ticks.ToString();
 
         // called (in debug-mode) when Debug.Write() is called
         public override void Write(string message)
@@ -34,8 +35,8 @@ namespace NeoCortexApiSample
 
         private void WriteToFile(string message)
         {
-            string filePath = "";
-            System.IO.File.AppendAllText(filePath, message);
+            string filePath = TraceOutputFileName;//"file.trace";
+            System.IO.File.AppendAllLines(filePath, new string[] { message });
         }
     }
 }

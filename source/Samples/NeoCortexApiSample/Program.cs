@@ -20,6 +20,7 @@ namespace NeoCortexApiSample
         {
             // Inject MyTraceListener to write in user defined destination instead of Debug.WriteLine
             var myListener = new MyTraceListener();
+            //myListener.WriteToFile = true;
             Trace.Listeners.Add(myListener);
             //
             // Starts experiment that demonstrates how to learn spatial patterns.
@@ -37,10 +38,10 @@ namespace NeoCortexApiSample
             //GridCellSamples gridCells = new GridCellSamples();
             //gridCells.Run();
 
-            // RunMultiSimpleSequenceLearningExperiment();
+            RunMultiSimpleSequenceLearningExperiment();
 
 
-            //RunMultiSequenceLearningExperiment();
+            RunMultiSequenceLearningExperiment();
         }
 
         private static void RunMultiSimpleSequenceLearningExperiment()

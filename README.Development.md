@@ -1,3 +1,18 @@
+NeoCortex API:
+===========================
+
+Location: neocortexapi\source
+open terminal and go to Location of "Dockfile"
+
+e.g; D:\ShababUddin\neocortexapi\source>
+
+Commands:
+docker build -t v1 .
+
+docker run v1
+
+
+
 
 
 
