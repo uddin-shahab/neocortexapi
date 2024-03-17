@@ -25,10 +25,10 @@ RUN dotnet restore NeoCortexApi.sln
 
 WORKDIR "/src/"
 
-RUN dotnet build Samples/NeoCortexApiSample/NeoCortexApiSample.csproj -c Release -o /app/build
+RUN dotnet build Samples/NeoCortexApiSample/NeoCortexApiSample.csproj -c Debug -o /app/build
 FROM build-env AS publish
 
-RUN dotnet publish Samples/NeoCortexApiSample/NeoCortexApiSample.csproj -c Release -o /app/publish
+RUN dotnet publish Samples/NeoCortexApiSample/NeoCortexApiSample.csproj -c Debug -o /app/publish
 FROM runtime-env AS final
 
 WORKDIR /app

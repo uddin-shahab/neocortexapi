@@ -27,13 +27,15 @@ namespace NeoCortexApiSample
             // Inject MyTraceListener to write in user defined destination instead of Debug.WriteLine
             var myListener = new MyTraceListener();
             myListener.ShouldWriteToFile = true;
-            myListener.TraceOutputFileName = string.Concat(algorithmName, "-", outputFileName);
+            var nameFile = string.Concat(algorithmName, "-", outputFileName);
+            myListener.TraceOutputFileName = nameFile;
             Trace.Listeners.Add(myListener);
-
+            Console.WriteLine("outputFileName is = " + nameFile);
 
             if (algorithmName == "SPL")
             {
                 Console.WriteLine(">> SPL");
+
                 //Starts experiment that demonstrates how to learn spatial patterns.
                 SpatialPatternLearning experiment = new SpatialPatternLearning();
                 experiment.Run();
