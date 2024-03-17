@@ -1,5 +1,7 @@
 ﻿using NeoCortexApi;
 using NeoCortexApi.Encoders;
+using Newtonsoft.Json;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,38 +20,69 @@ namespace NeoCortexApiSample
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            var algorithmName = args[0];
+            var outputFileName = args[1];
+            var inputSequences = args[2];
+
             // Inject MyTraceListener to write in user defined destination instead of Debug.WriteLine
             var myListener = new MyTraceListener();
-            //myListener.WriteToFile = true;
+            myListener.ShouldWriteToFile = true;
+            myListener.TraceOutputFileName = string.Concat(algorithmName, "-", outputFileName);
             Trace.Listeners.Add(myListener);
-            //
-            // Starts experiment that demonstrates how to learn spatial patterns.
-            //SpatialPatternLearning experiment = new SpatialPatternLearning();
-            //experiment.Run();
+
+
+            if (algorithmName == "SPL")
+            {
+                Console.WriteLine(">> SPL");
+                //Starts experiment that demonstrates how to learn spatial patterns.
+                SpatialPatternLearning experiment = new SpatialPatternLearning();
+                experiment.Run();
+            }
+            else if (algorithmName =="MSSL" ) 
+            {
+                Console.WriteLine(">> MSSL");
+                var sequenceList = JsonConvert.DeserializeObject<List<Sequence>>(inputSequences);
+
+                Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
+                foreach (var request in sequenceList)
+                {
+                    sequences.Add(request.Key, request.Values);
+                }
+
+                RunMultiSimpleSequenceLearningExperiment(sequences);
+            }
+            else if (algorithmName == "MSL")
+            {
+                Console.WriteLine(">> MSL");
+                var sequenceList = JsonConvert.DeserializeObject<List<Sequence>>(inputSequences);
+
+                Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
+                foreach (var request in sequenceList)
+                {
+                    sequences.Add(request.Key, request.Values);
+                }
+
+                RunMultiSequenceLearningExperiment(sequences);
+            }
 
             // Added below line for testing purpose only
-            Debug.WriteLine("Welcome ON =={0}== AT =={1}== ", DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString());
+            Console.WriteLine("=========>>> Execution Completed AT =={1}== ", DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString());
 
-            //
+
             // Starts experiment that demonstrates how to learn spatial patterns.
             //SequenceLearning experiment = new SequenceLearning();
             //experiment.Run();
 
             //GridCellSamples gridCells = new GridCellSamples();
             //gridCells.Run();
-
-            RunMultiSimpleSequenceLearningExperiment();
-
-
-            RunMultiSequenceLearningExperiment();
         }
 
-        private static void RunMultiSimpleSequenceLearningExperiment()
+        private static void RunMultiSimpleSequenceLearningExperiment(Dictionary<string, List<double>> sequences)
         {
-            Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
+            //Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
 
-            sequences.Add("S1", new List<double>(new double[] { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, }));
-            sequences.Add("S2", new List<double>(new double[] { 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0 }));
+            //sequences.Add("S1", new List<double>(new double[] { 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, }));
+            //sequences.Add("S2", new List<double>(new double[] { 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0 }));
 
             //
             // Prototype for building the prediction engine.
@@ -64,15 +97,15 @@ namespace NeoCortexApiSample
         /// Second, three short sequences with three elements each are created und used for prediction. The predictor used by experiment privides to the HTM every element of every predicting sequence.
         /// The predictor tries to predict the next element.
         /// </summary>
-        private static void RunMultiSequenceLearningExperiment()
+        private static void RunMultiSequenceLearningExperiment(Dictionary<string, List<double>> sequences)
         {
-            Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
+            //Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
 
             //sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 0.0, 2.0, 3.0, 4.0, 5.0, 6.0, 5.0, 4.0, 3.0, 7.0, 1.0, 9.0, 12.0, 11.0, 12.0, 13.0, 14.0, 11.0, 12.0, 14.0, 5.0, 7.0, 6.0, 9.0, 3.0, 4.0, 3.0, 4.0, 3.0, 4.0 }));
             //sequences.Add("S2", new List<double>(new double[] { 0.8, 2.0, 0.0, 3.0, 3.0, 4.0, 5.0, 6.0, 5.0, 7.0, 2.0, 7.0, 1.0, 9.0, 11.0, 11.0, 10.0, 13.0, 14.0, 11.0, 7.0, 6.0, 5.0, 7.0, 6.0, 5.0, 3.0, 2.0, 3.0, 4.0, 3.0, 4.0 }));
 
-            sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 2.0, 5.0, }));
-            sequences.Add("S2", new List<double>(new double[] { 8.0, 1.0, 2.0, 9.0, 10.0, 7.0, 11.00 }));
+            //sequences.Add("S1", new List<double>(new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 2.0, 5.0, }));
+            //sequences.Add("S2", new List<double>(new double[] { 8.0, 1.0, 2.0, 9.0, 10.0, 7.0, 11.00 }));
 
             //
             // Prototype for building the prediction engine.
@@ -122,5 +155,11 @@ namespace NeoCortexApiSample
 
             Debug.WriteLine("------------------------------");
         }
+    }
+
+    public record Sequence
+    {
+        public required string Key { get; set; }
+        public required List<double> Values { get; set; }
     }
 }
