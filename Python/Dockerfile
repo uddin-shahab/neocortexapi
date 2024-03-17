@@ -14,4 +14,4 @@ WORKDIR  /ColumnActivityDiagram
 ENTRYPOINT ["python", "draw_figure.py"]
 
 # Pass arguments
-CMD ["-fn", "sampleOne.txt", "-gn", "A2024123", "-mc", "19", "-ht", "8", "-yt", "yaxis", "-xt", "xaxis", "-min", "50", "-max", "4000", "-st", "'single column'", "-fign", "CortialColumn", "-a"]
+#CMD ["-fn", "sampleOne.txt", "-gn", "A2024123", "-mc", "19", "-ht", "8", "-yt", "yaxis", "-xt", "xaxis", "-min", "50", "-max", "4000", "-st", "'single column'", "-fign", "CortialColumn", "-a"]
