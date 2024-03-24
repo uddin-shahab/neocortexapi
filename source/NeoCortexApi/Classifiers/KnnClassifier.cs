@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NeoCortexApi.Entities;
 using System.Linq;
+using System.Diagnostics;
 
 /*
 The KNN (K-Nearest-Neighbor) Classifier is designed and integrated with the Neocortex API. It takes in a
@@ -186,6 +187,8 @@ namespace NeoCortexApi.Classifiers
         private List<ClassifierResult<string>> Voting(Dictionary<int, List<ClassificationAndDistance>> mapping,
             short howMany)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             var votes = new DefaultDictionary<string, int>();
             var overLaps = new Dictionary<string, int>();
             var similarity = new Dictionary<string, double>();
@@ -232,6 +235,9 @@ namespace NeoCortexApi.Classifiers
                 result.Add(cls);
             }
 
+            sw.Stop();
+            Debug.WriteLine("Time elapsed: {0} - KnnClassifier_Voting", sw.Elapsed.ToString());
+
             return result.GetRange(0, howMany).ToList();
         }
 
@@ -243,6 +249,8 @@ namespace NeoCortexApi.Classifiers
         /// <returns>Returns a list of ClassifierResult objects ranked based on the closest resemblances</returns>
         public List<ClassifierResult<TIN>> GetPredictedInputValues(Cell[] unclassifiedCells, short howMany = 1)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             if (unclassifiedCells.Length == 0)
                 return new List<ClassifierResult<TIN>>();
 
@@ -261,6 +269,9 @@ namespace NeoCortexApi.Classifiers
 
             foreach (var mappings in mappedElements)
                 mappings.Value.Sort(); //Sorting values according to distance
+
+            sw.Stop();
+            Debug.WriteLine("Time elapsed: {0} - KnnClassifier_GetPredictedInputValues", sw.Elapsed.ToString());
 
             return Voting(mappedElements, howMany) as List<ClassifierResult<TIN>>;
         }

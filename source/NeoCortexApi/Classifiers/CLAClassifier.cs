@@ -3,6 +3,7 @@
 using NeoCortexApi.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 
@@ -141,6 +142,8 @@ namespace NeoCortexApi.Classifiers
 
         public ClassificationExperiment<T> Compute(int recordNum, Dictionary<string, object> classification, int[] patternNZ, bool learn, bool infer)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             if (classification == null)
                 throw new ArgumentNullException(nameof(classification));
             if (patternNZ == null)
@@ -345,6 +348,9 @@ namespace NeoCortexApi.Classifiers
                     }
                 }
             }
+
+            sw.Stop();
+            Debug.WriteLine("Time elapsed: {0} - CLAClassifier_Compute", sw.Elapsed.ToString());
 
             return retVal;
         }
