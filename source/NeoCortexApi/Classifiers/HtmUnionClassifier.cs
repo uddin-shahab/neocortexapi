@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 using NeoCortexApi.Entities;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace NeoCortexApi.Classifiers
@@ -12,21 +13,28 @@ namespace NeoCortexApi.Classifiers
 
         public TIN GetPredictedInputValue(Cell[] predictiveCells)
         {
-            int result = 0;
+            int result = 0, predictedNextValueResult = 0;
             dynamic charOutput = null;
             int[] arr = new int[predictiveCells.Length];
             for (int i = 0; i < predictiveCells.Length; i++)
             {
                 arr[i] = predictiveCells[i].Index;
             }
+
+            Stopwatch sw = Stopwatch.StartNew();
+
             foreach (var key in m_ActiveMap.Keys)
             {
-                if (result < PredictNextValue(arr, m_ActiveMap[key]))
+                predictedNextValueResult = PredictNextValue(arr, m_ActiveMap[key]);
+                if (result < predictedNextValueResult)
                 {
-                    result = PredictNextValue(arr, m_ActiveMap[key]);
+                    result = predictedNextValueResult;
                     charOutput = key as string;
                 }
             }
+            sw.Stop();
+            Debug.WriteLine("Time elapsed: {0}", sw.Elapsed.ToString());
+
             return (TIN)charOutput;
         }
 

@@ -73,6 +73,7 @@ namespace NeoCortexApi.Classifiers
         /// <returns></returns>
         private bool ContainsSdr(TIN input, int[] sdr)
         {
+            Stopwatch sw = Stopwatch.StartNew();
             foreach (var item in m_AllInputs[input])
             {
                 if (item.SequenceEqual(sdr))
@@ -81,6 +82,9 @@ namespace NeoCortexApi.Classifiers
                     return false;
             }
 
+            sw.Stop();
+            Debug.WriteLine("Time elapsed: {0}", sw.Elapsed.ToString());
+            
             return false;
         }
 
@@ -89,6 +93,8 @@ namespace NeoCortexApi.Classifiers
         {
             int maxSameBits = 0;
             bestSdr = new int[1];
+
+            Stopwatch sw = Stopwatch.StartNew();
 
             foreach (var sdr in m_AllInputs[input])
             {
@@ -99,7 +105,10 @@ namespace NeoCortexApi.Classifiers
                     bestSdr = sdr;
                 }
             }
-            
+
+            sw.Stop();
+            Debug.WriteLine("Time elapsed: {0}", sw.Elapsed.ToString());
+
             similarity = Math.Round(MathHelpers.CalcArraySimilarity(bestSdr, cellIndicies), 2);
 
             return maxSameBits;
@@ -227,12 +236,15 @@ namespace NeoCortexApi.Classifiers
             }
 
             int cnt = 0;
+            Stopwatch sw = Stopwatch.StartNew();
             foreach (var keyPair in dict.Values.OrderByDescending(key => key.Similarity))
             {
                 res.Add(keyPair);
                 if (++cnt >= howMany)
                     break;
             }
+            sw.Stop();
+            Debug.WriteLine("Time elapsed: {0}", sw.Elapsed.ToString());
 
             return res;
         }
