@@ -26,7 +26,7 @@ Pre-requisite:
 ##### For SpatialPatternLearning
 
 ![alt text](image-5.png)
-    D:\ShababUddin\neocortexapi\source>docker run a203 SPL fileName2058.txt 
+    D:\ShababUddin\neocortexapi\source>docker run a203 SPL fileName2058.txt 0
 
 ##### For MultiSimpleSequenceLearning
 ![alt text](image-3.png)
