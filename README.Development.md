@@ -11,7 +11,7 @@ Pre-requisite:
 
 
 ## Environment Setup - .NET Part:
-1. Clone the project from https://github.com/uddin-shahab/neocortexapi/tree/development
+1. Clone the project from https://github.com/uddin-shahab/neocortexapi/tree/development. After clone make sure you have checked out "development" branch
 2. Open Visual Studio and open solution NeoCortexApi.sln
 3. Rebuild Solution from Build menu
 4. Make sure Docker Desktop is running
