@@ -26,15 +26,15 @@ Pre-requisite:
 ##### For SpatialPatternLearning
 
 ![alt text](image-5.png)
-    D:\ShababUddin\neocortexapi\source>docker run a203 SPL fileName2058.txt 0
+    D:\ShababUddin\neocortexapi\source>docker run a203 SPL fileNameSPL.txt 0
 
 ##### For MultiSimpleSequenceLearning
 ![alt text](image-3.png)
-    D:\ShababUddin\neocortexapi\source>docker run a203 MSSL fileName2058.txt  [{\"key\":\"S1\",\"values\":[1.0,2.0,3.0,4.0,5.0,6.0,7.0]},{\"key\":\"S2\",\"values\":[10.0,11.0,12.0,13.0,14.0,15.0,16.0]}]
+    D:\ShababUddin\neocortexapi\source>docker run a203 MSSL fileNameMSSL.txt  [{\"key\":\"S1\",\"values\":[1.0,2.0,3.0,4.0,5.0,6.0,7.0]},{\"key\":\"S2\",\"values\":[10.0,11.0,12.0,13.0,14.0,15.0,16.0]}]
 
 ##### For MultiSequenceLearning
 ![alt text](image-4.png)
-    D:\ShababUddin\neocortexapi\source>docker run a203 MSL fileName2058.txt  [{\"key\":\"S1\",\"values\":[1.0,2.0,3.0,4.0,5.0,6.0,7.0]},{\"key\":\"S2\",\"values\":[10.0,11.0,12.0,13.0,14.0,15.0,16.0]}]
+    D:\ShababUddin\neocortexapi\source>docker run a203 MSL fileNameMSL.txt  [{\"key\":\"S1\",\"values\":[1.0,2.0,3.0,4.0,5.0,6.0,7.0]},{\"key\":\"S2\",\"values\":[10.0,11.0,12.0,13.0,14.0,15.0,16.0]}]
 
 The above command will generate a Text file in Docker container with all the SDR values produced by NeocortexApi. See screenshot below:
 

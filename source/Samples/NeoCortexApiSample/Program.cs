@@ -34,7 +34,7 @@ namespace NeoCortexApiSample
 
             if (algorithmName == "SPL")
             {
-                Console.WriteLine(">> SPL");
+                Console.WriteLine(">> Running SpatialPatternLearning Experiment");
 
                 //Starts experiment that demonstrates how to learn spatial patterns.
                 SpatialPatternLearning experiment = new SpatialPatternLearning();
@@ -42,9 +42,9 @@ namespace NeoCortexApiSample
             }
             else if (algorithmName =="MSSL" ) 
             {
-                Console.WriteLine(">> MSSL");
-                var sequenceList = JsonConvert.DeserializeObject<List<Sequence>>(inputSequences);
+                Console.WriteLine(">> Running MultiSimpleSequenceLearning Experiment");
 
+                var sequenceList = JsonConvert.DeserializeObject<List<Sequence>>(inputSequences);
                 Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
                 foreach (var request in sequenceList)
                 {
@@ -55,9 +55,9 @@ namespace NeoCortexApiSample
             }
             else if (algorithmName == "MSL")
             {
-                Console.WriteLine(">> MSL");
+                Console.WriteLine(">> Running MultiSequenceLearning Experiment");
+                
                 var sequenceList = JsonConvert.DeserializeObject<List<Sequence>>(inputSequences);
-
                 Dictionary<string, List<double>> sequences = new Dictionary<string, List<double>>();
                 foreach (var request in sequenceList)
                 {
